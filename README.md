@@ -3,487 +3,288 @@
 
 # nextjs-fastapi-template
 
-## Table of Contents
-* [About](#about)
-* [Production-Ready Authentication & Dashboard](#production-ready-authentication-and-dashboard)
-* [Getting Started with This Template](#getting-started-with-this-template)
-* [Setup](#local-setup)
-  * [Installing Required Tools](#installing-required-tools)
+## 目录
+* [关于](#关于)
+* [生产就绪的身份验证和仪表板](#生产就绪的身份验证和仪表板)
+* [使用此模板开始](#使用此模板开始)
+* [设置](#设置)
+  * [安装所需工具](#安装所需工具)
     * [1. uv](#1-uv)
-    * [2. Node.js, npm and pnpm](#2-nodejsm-npm-and-pnpm)
+    * [2. Node.js, npm 和 pnpm](#2-nodejsm-npm-and-pnpm)
     * [3. Docker](#3-docker)
     * [4. Docker Compose](#4-docker-compose)
-  * [Setting Up Environment Variables](#setting-up-environment-variables)
-  * [Running the Database](#running-the-database)
-  * [Build the project (without Docker)](#build-the-project-without-docker)
-    * [Backend](#backend)
-    * [Frontend](#frontend)
-  * [Build the project (with Docker)](#build-the-project-with-docker)
-    * [Backend](#backend)
-    * [Frontend](#frontend)
-* [Running the Application](#running-the-application)
-* [Hot Reload on development](#hot-reload-on-development)
-  * [Manual Execution of Hot Reload Commands](#manual-execution-of-hot-reload-commands)
-* [Testing](#testing)
-* [Email Localhost Setup](#email-localhost-setup)
-* [Pre-Commit Setup](#pre-commit-setup)
-  * [Installing and Activating Pre-Commit Hooks](#installing-and-activating-pre-commit-hooks)
-  * [Running Pre-Commit Checks](#running-pre-commit-checks)
-  * [Updating Pre-Commit Hooks](#updating-pre-commit-hooks)
-* [Alembic Database Migrations](#alembic-database-migrations)
-* [GitHub Actions](#github-actions)
-  * [Secrets Configuration](#secrets-configuration)
-* [Production Deployment](#production-deployment)
-* [CI (GitHub Actions) Setup for Production Deployment](#ci-github-actions-setup-for-production-deployment)
-* [Post-Deployment Configuration](#post-deployment-configuration)
-* [Makefile](#makefile)
-* [Important Considerations](#important-considerations)
-* [Contributing](#contributing)
-* [Share your project!](#share-your-project)
-* [Commercial Support](#commercial-support)
+  * [设置环境变量](#设置环境变量)
+  * [运行数据库](#运行数据库)
+  * [构建项目（不使用Docker）](#构建项目（不使用Docker）)
+    * [后端](#后端)
+    * [前端](#前端)
+  * [构建项目（使用Docker）](#构建项目（使用Docker）)
+    * [后端](#后端)
+    * [前端](#前端)
+* [运行应用程序](#运行应用程序)
+* [开发环境下的热重载](#开发环境下的热重载)
+  * [手动执行热重载命令](#手动执行热重载命令)
+* [测试](#测试)
+* [电子邮件本地主机设置](#电子邮件本地主机设置)
+* [预提交设置](#预提交设置)
+  * [安装和激活预提交钩子](#安装和激活预提交钩子)
+  * [运行预提交检查](#运行预提交检查)
+  * [更新预提交钩子](#更新预提交钩子)
+* [Alembic数据库迁移](#Alembic数据库迁移)
+* [GitHub Actions](#GitHub Actions)
+  * [Secrets Configuration](#Secrets Configuration)
+* [生产部署](#生产部署)
+* [为生产部署设置CI（GitHub Actions）](#为生产部署设置CI（GitHub Actions）)
+* [部署后配置](#部署后配置)
+* [Makefile](#Makefile)
+* [重要考虑因素](#重要考虑因素)
+* [贡献](#贡献)
+* [分享你的项目！](#分享你的项目！)
+* [商业支持](#商业支持)
 
-## About
-This template streamlines building APIs with [FastAPI](https://fastapi.tiangolo.com/) and dynamic frontends with [Next.js](https://nextjs.org/). It integrates the backend and frontend using [@hey-api/openapi-ts](https://github.com/hey-ai/openapi-ts) to generate a type-safe client, with automated watchers to keep the OpenAPI schema and client updated, ensuring a smooth and synchronized development workflow.  
+## 关于
+这个模板简化了使用 [FastAPI](https://fastapi.tiangolo.com/) 构建API和使用 [Next.js](https://nextjs.org/) 构建动态前端的过程。它使用 [@hey-api/openapi-ts](https://github.com/hey-ai/openapi-ts) 来生成类型安全的客户端，自动监视OpenAPI模式和客户端的更新，确保开发工作流的顺畅和同步。
 
-- [Next.js](https://nextjs.org/): Fast, SEO-friendly frontend framework  
-- [FastAPI](https://fastapi.tiangolo.com/): High-performance Python backend  
-- [SQLAlchemy](https://www.sqlalchemy.org/): Powerful Python SQL toolkit and ORM
-- [PostgreSQL](https://www.postgresql.org/): Advanced open-source relational database
-- [Pydantic](https://docs.pydantic.dev/): Data validation and settings management using Python type annotations
-- [Zod](https://zod.dev/) + [TypeScript](https://www.typescriptlang.org/): End-to-end type safety and schema validation  
-- [fastapi-users](https://fastapi-users.github.io/fastapi-users/): Complete authentication system with:
-  - Secure password hashing by default
-  - JWT (JSON Web Token) authentication
-  - Email-based password recovery
-- [Shadcn/ui](https://ui.shadcn.com/): Beautiful and customizable React components
-- [OpenAPI-fetch](https://github.com/Hey-AI/openapi-fetch): Fully typed client generation from OpenAPI schema  
-- [fastapi-mail](https://sabuhish.github.io/fastapi-mail/): Efficient email handling for FastAPI applications
-- [uv](https://docs.astral.sh/uv/): An extremely fast Python package and project manager
-- [Pytest](https://docs.pytest.org/): Powerful Python testing framework
-- Code Quality Tools:
-  - [Ruff](https://github.com/astral-sh/ruff): Fast Python linter
-  - [ESLint](https://eslint.org/): JavaScript/TypeScript code quality
-- Hot reload watchers:  
-  - Backend: [Watchdog](https://github.com/gorakhargosh/watchdog) for monitoring file changes  
-  - Frontend: [Chokidar](https://github.com/paulmillr/chokidar) for live updates  
-- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/): Consistent environments for development and production
-- [MailHog](https://github.com/mailhog/MailHog): Email server for development
-- [Pre-commit hooks](https://pre-commit.com/): Enforce code quality with automated checks  
-- [OpenAPI JSON schema](https://swagger.io/specification/): Centralized API documentation and client generation  
+- [Next.js](https://nextjs.org/): 快速、SEO友好的前端框架
+- [FastAPI](https://fastapi.tiangolo.com/): 高性能的Python后端
+- [SQLAlchemy](https://www.sqlalchemy.org/): 强大的Python SQL工具包和ORM
+- [PostgreSQL](https://www.postgresql.org/): 先进的开源关系数据库
+- [Pydantic](https://docs.pydantic.dev/): 使用Python类型注释进行数据验证和设置管理
+- [Zod](https://zod.dev/) + [TypeScript](https://www.typescriptlang.org/): 端到端类型安全和模式验证
+- [fastapi-users](https://fastapi-users.github.io/fastapi-users/): 包含以下功能的完整身份验证系统：
+  - 默认情况下进行安全密码哈希处理
+  - JWT（JSON Web Token）身份验证
+  - 基于电子邮件的密码恢复
+- [Shadcn/ui](https://ui.shadcn.com/): 可定制的React组件
+- [OpenAPI-fetch](https://github.com/Hey-AI/openapi-fetch): 从OpenAPI模式生成完全类型化的客户端
+- [fastapi-mail](https://sabuhish.github.io/fastapi-mail/): 用于FastAPI应用的高效电子邮件处理
+- [uv](https://docs.astral.sh/uv/): 一个极快的Python包和项目管理器
+- [Pytest](https://docs.pytest.org/): 强大的Python测试框架
+- 代码质量工具：
+  - [Ruff](https://github.com/astral-sh/ruff): 快速的Python代码检查
+  - [ESLint](https://eslint.org/): JavaScript/TypeScript代码质量
+- 热重载监视器：
+  - 后端：[Watchdog](https://github.com/gorakhargosh/watchdog) 用于监视文件更改
+  - 前端：[Chokidar](https://github.com/paulmillr/chokidar) 用于实时更新
+- [Docker](https://www.docker.com/) 和 [Docker Compose](https://docs.docker.com/compose/): 用于开发和生产的一致环境
+- [MailHog](https://github.com/mailhog/MailHog): 用于开发的电子邮件服务器
+- [Pre-commit hooks](https://pre-commit.com/): 使用自动检查来强制代码质量
+- [OpenAPI JSON schema](https://swagger.io/specification/): 集中的API文档和客户端生成
 
-With this setup, you'll save time and maintain a seamless connection between your backend and frontend, boosting productivity and reliability.
+通过这个设置，你将节省时间并保持后端和前端之间的无缝连接，提高生产力和可靠性。
 
-## Production-Ready Authentication & Dashboard features
-This template comes with a pre-configured authentication system and a simple dashboard interface, allowing you to start building your application with user management features right away.
+## 生产就绪的身份验证和仪表板功能
+这个模板带有预配置的身份验证系统和简单的仪表板界面，允许你立即开始构建具有用户管理功能的应用。
 
-## Getting Started with This Template
+## 使用此模板开始
 
-To use this template for your own project:
+要为你自己的项目使用这个模板：
 
-1. Create a new repository using this template by following GitHub's [template repository guide](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template#creating-a-repository-from-a-template)
-2. Clone your new repository and navigate to it: `cd your-project-name`
-3. Update this README:
-   - Change the project name in the first line
-   - Remove this "Getting Started with This Template" section
-4. Make sure you have Python 3.12 installed
+1. 按照GitHub的[模板存储库指南](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template#creating-a-repository-from-a-template)创建一个新的存储库
+2. 克隆你的新存储库并导航到它：`cd your-project-name`
+3. 更新这个README：
+   - 更改第一行中的项目名称
+   - 删除这个"使用此模板开始"部分
+4. 确保你已经安装了Python 3.12
 
-Once completed, proceed to the [Setup](#setup) section below.
+完成后，继续下面的[设置](#设置)部分。
 
-## Setup
+## 设置
 
-### Installing Required Tools
+### 安装所需工具
 
 #### 1. uv
-uv is used to manage Python dependencies in the backend. Install uv by following the [official installation guide](https://docs.astral.sh/uv/getting-started/installation/).
+uv 用于管理后端的Python依赖。按照[官方安装指南](https://docs.astral.sh/uv/getting-started/installation/)安装 uv。
 
-#### 2. Node.jsm, npm and pnpm
-Ensure Node.js and npm are installed for running the frontend. Follow the [Node.js installation guide](https://nodejs.org/en/download/).
-After that install pnpm by running:
+#### 2. Node.jsm, npm 和 pnpm
+确保已经安装了Node.js和npm以运行前端。按照[Node.js安装指南](https://nodejs.org/en/download/)进行安装。
+安装完成后，运行以下命令安装pnpm：
 ```bash
 npm install -g pnpm
 ```
 
 #### 3. Docker
-Docker is needed to run the project in a containerized environment. Follow the appropriate installation guide:
+Docker是在容器化环境中运行项目所需的。按照适当的安装指南进行安装：
 
-- [Install Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
-- [Install Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
-- [Get Docker CE for Linux](https://docs.docker.com/install/linux/docker-ce/)
+- [为Mac安装Docker](https://docs.docker.com/docker-for-mac/install/)
+- [为Windows安装Docker](https://docs.docker.com/docker-for-windows/install/)
+- [获取Linux的Docker CE](https://docs.docker.com/install/linux/docker-ce/)
 
 #### 4. Docker Compose
-Ensure `docker-compose` is installed. Refer to the [Docker Compose installation guide](https://docs.docker.com/compose/install/).
+确保已经安装了`docker-compose`。参考[Docker Compose安装指南](https://docs.docker.com/compose/install/)。
 
-### Setting Up Environment Variables
+### 设置环境变量
 
-**Backend (`fastapi_backend/.env`):**
-Copy the `.env.example` files to `.env` and update the variables with your own values.
+**后端（`fastapi_backend/.env`）:**
+将`.env.example`文件复制到`.env`并使用你自己的值更新变量。
    ```bash
    cd fastapi_backend && cp .env.example .env
    ```
-1. You will only need to update the secret keys. You can use the following command to generate a new secret key:
+1. 你只需要更新密钥。你可以使用以下命令生成一个新的密钥：
    ```bash
    python3 -c "import secrets; print(secrets.token_hex(32))"
    ```
-2. The DATABASE, MAIL, OPENAPI, CORS, and FRONTEND_URL settings are ready to use locally.
-3. If you're using Docker, the DATABASE and MAIL settings are already configured in Docker Compose.
-4. The OPENAPI_URL setting is commented out. Uncommenting it will hide the /docs and openapi.json URLs, which is ideal for production.
-5. You can check the .env.example file for more information about the variables.
+2. DATABASE, MAIL, OPENAPI, CORS和FRONTEND_URL设置已经准备好在本地使用。
+3. 如果你正在使用Docker，DATABASE和MAIL设置已经在Docker Compose中配置。
+4. OPENAPI_URL设置被注释掉。取消注释将隐藏/docs和openapi.json的URL，这对于生产是理想的。
+5. 你可以查看.env.example文件以获取有关变量的更多信息。
 
-**Frontend (`nextjs-frontend/.env.local`):**
-Copy the `.env.example` files to `.env`. These values are unlikely to change, so you can leave them as they are.
+**前端（`nextjs-frontend/.env.local`）:**
+将`.env.example`文件复制到`.env`。这些值不太可能改变，所以你可以将它们保留为它们的值。
    ```bash
    cd nextjs-frontend && cp .env.example .env
    ```
 
-### Running the Database
-1. Use Docker to run the database to avoid local installation issues. Build and start the database container:
+### 运行数据库
+1. 使用Docker运行数据库以避免本地安装问题。构建并启动数据库容器：
    ```bash
    docker compose build db
    docker compose up -d db
    ```
-2. Run the following command to apply database migrations:
+2. 运行以下命令应用数据库迁移：
    ```bash
    make docker-migrate-db
    ```
 
-### Build the project (without Docker):
-To setup the project environment locally, use the following commands:
+### 构建项目（不使用Docker）:
+要在本地设置项目环境，使用以下命令：
 
-#### Backend
+#### 后端
 
-1. Navigate to the `fastapi_backend` directory and run:
+1. 导航到`fastapi_backend`目录并运行：
    ```bash
    uv sync
    ```
 
-#### Frontend
-1. Navigate to the `nextjs-frontend` directory and run:
+#### 前端
+1. 导航到`nextjs-frontend`目录并运行：
    ```bash
    pnpm install
    ```
 
-### Build the project (with Docker):
+### 构建项目（使用Docker）:
 
-1. Build the backend and frontend containers:
+1. 构建后端和前端容器：
    ```bash
    make docker-build
    ```
 
-## Running the Application
+## 运行应用程序
 
-If you are not using Docker:
+如果你没有使用Docker：
 
-1. Start the FastAPI server:
+1. 启动FastAPI服务器：
    ```bash
    make start-backend
    ```
 
-2. Start the Next.js development server:
+2. 启动Next.js开发服务器：
    ```bash
    make start-frontend
    ```
 
-If you are using Docker:
-1. Start the FastAPI server container:
+如果你正在使用Docker：
+1. 启动FastAPI服务器容器：
    ```bash
    make docker-start-backend
    ```
-2. Start the Next.js development server container:
+
+2. 启动Next.js开发服务器容器：
    ```bash
    make docker-start-frontend
    ```
 
-- **Backend**: Access the API at `http://localhost:8000`.
-- **Frontend**: Access the web application at `http://localhost:3000`.
+- **后端**: 在`http://localhost:8000`访问API。
+- **前端**: 在`http://localhost:3000`访问Web应用。
 
-### Hot Reload on development
-The project includes two hot reloads when running the application, one for the backend and one for the frontend, which automatically restart local servers when they detect changes. This ensures that the application is always up-to-date without needing manual restarts.
+### 开发环境下的热重载
+项目在运行应用程序时包括两个热重载，一个用于后端，一个用于前端，当它们检测到更改时会自动重新启动本地服务器。这确保了应用程序始终是最新的，无需手动重新启动。
 
-- The **backend hot reload** monitors changes to the backend code.
-- The **frontend hot reload** monitors changes to the frontend code, as well as to the `openapi.json` schema generated by the backend.
+- **后端热重载**监视后端代码的更改。
+- **前端热重载**监视前端代码的更改，以及由后端生成的`openapi.json`模式的更改。
 
-### Manual Execution of Hot Reload Commands
-You can manually execute the same commands that the hot reloads call when they detect a change:
+### 手动执行热重载命令
+你可以手动执行热重载检测到更改时调用的相同命令：
 
-1. To export the `openapi.json` schema:
+1. 导出`openapi.json`模式：
    ```bash
    cd fastapi_backend && uv run python -m commands.generate_openapi_schema
    ```
-   or using Docker:
+   或使用Docker：
    ```bash
    docker compose run --rm --no-deps -T backend uv run python -m commands.generate_openapi_schema
    ```
 
-2. To generate the frontend client:
+2. 生成前端客户端：
    ```bash
    cd nextjs-frontend && npm run generate-client
    ```
-   or using Docker:
+   或使用Docker：
    ```bash
    docker compose run --rm --no-deps -T frontend npm run generate-client
    ```
 
-## Testing
-To run the tests, you need to run the test database container:
+## 测试
+要运行测试，你需要运行测试数据库容器：
    ```bash
    make docker-up-test-db
    ```
 
-Then run the tests locally:
+然后在本地运行测试：
    ```bash
    make test-backend
    make test-frontend
    ```
 
-Or using Docker:
+或使用Docker：
    ```bash
    make docker-test-backend
    make docker-test-frontend
    ```
-## Pre-Commit Setup
-To maintain code quality and consistency, the project includes two separate pre-commit configuration files:
-- `.pre-commit-config.yaml` for running pre-commit checks locally.
-- `.pre-commit-config.docker.yaml` for running pre-commit checks within Docker.
 
-### Installing and Activating Pre-Commit Hooks
-To activate pre-commit hooks, run the following commands for each configuration file:
+## 预提交设置
+为了保持代码质量和一致性，项目包括两个单独的预提交配置文件：
+- `.pre-commit-config.yaml`用于在本地运行预提交检查。
+- `.pre-commit-config.docker.yaml`用于在Docker中运行预提交检查。
 
-- **For the local configuration file**:
+### 安装和激活预提交钩子
+要激活预提交钩子，对每个配置文件运行以下命令：
+
+- **对于本地配置文件**:
   ```bash
   pre-commit install -c .pre-commit-config.yaml
   ```
 
-- **For the Docker configuration file**:
+- **对于Docker配置文件**:
   ```bash
   pre-commit install -c .pre-commit-config.docker.yaml
   ```
 
-### Email Localhost Setup
+### 电子邮件本地主机设置
 
-To setup the email locally, you need to start [MailHog](https://github.com/mailhog/MailHog) by running the following command:
+要在本地设置电子邮件，你需要运行以下命令来启动[MailHog](https://github.com/mailhog/MailHog)：
    ```bash
    make docker-up-mailhog
    ```
 
-- **Email client**: Access the email at `http://localhost:8025`.
+- **电子邮件客户端**: 在`http://localhost:8025`访问电子邮件。
 
-### Running Pre-Commit Checks
-To manually run the pre-commit checks on all files, use:
+### 运行预提交检查
+要手动运行所有文件的预提交检查，使用：
 
 ```bash
 pre-commit run --all-files -c .pre-commit-config.yaml
 ```
 
-or
+或
 
 ```bash
 pre-commit run --all-files -c .pre-commit-config.docker.yaml
 ```
 
-### Updating Pre-Commit Hooks
-To update the hooks to their latest versions, run:
+### 更新预提交钩子
+要将钩子更新到它们的最新版本，运行：
 
 ```bash
 pre-commit autoupdate
 ```
-## Alembic Database Migrations
-If you need to create a new Database Migration:
-   ```bash
-   make docker-db-schema migration_name="add users"
-   ```
-then apply the migration to the database:
-   ```bash
-   make docker-migrate-db
-   ```
-
-## GitHub Actions
-This project comes with a pre-configured GitHub Actions setup to enable CI/CD. You can find the workflow configuration files inside the .github/workflows directory. Feel free to customize these workflows to better suit your project's needs.
-
-### Secrets Configuration
-For the workflows to function correctly, make sure to add the necessary secret keys to your GitHub repository's settings. Navigate to Settings > Secrets and variables > Actions and add the following keys:
-```
-DATABASE_URL: The connection string for your primary database.
-TEST_DATABASE_URL: The connection string for your test database.
-ACCESS_SECRET_KEY: The secret key for access token generation.
-RESET_PASSWORD_SECRET_KEY: The secret key for reset password functionality.
-VERIFICATION_SECRET_KEY: The secret key for email or user verification.
-```
-
-## Production Deployment
-
-### Overview
-
- Deploy to **Vercel** is supported, with dedicated buttons for the **Frontend** and **Backend** applications. Both require specific configurations during and after deployment to ensure proper functionality.
-
----
-
-### Frontend Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvintasoftware%2Fnextjs-fastapi-template%2Ftree%2Fmain%2Fnextjs-frontend&env=API_BASE_URL&envDescription=The%20API_BASE_URL%20is%20the%20backend%20URL%20where%20the%20frontend%20sends%20requests.)
-
-1. **Deploying the Frontend**  
-   - Click the **Frontend** button above to start the deployment process.  
-   - During deployment, you will be prompted to set the `API_BASE_URL`. Use a placeholder value (e.g., `https://`) for now, as this will be updated with the backend URL later.  
-   - Complete the deployment process [here](#post-deployment-configuration).
-
-### Backend Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvintasoftware%2Fnextjs-fastapi-template%2Ftree%2Fmain%2Ffastapi_backend&env=CORS_ORIGINS,ACCESS_SECRET_KEY,RESET_PASSWORD_SECRET_KEY,VERIFICATION_SECRET_KEY&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D)
-
-1. **Deploying the Backend**  
-   - Click the **Backend** button above to begin deployment.
-   - Set up the database first. The connection is automatically configured, so just follow the steps, and it should work by default.
-   - During the deployment process, you will be prompted to configure the following environment variables:
-
-     - **CORS_ORIGINS**  
-       - Set this to `["*"]` initially to allow all origins. You will update this with the frontend URL later.
-
-     - **ACCESS_SECRET_KEY**, **RESET_PASSWORD_SECRET_KEY**, **VERIFICATION_SECRET_KEY**  
-       - You can temporarily set these secret keys as plain strings (e.g., `examplekey`) during deployment. However, you should generate secure keys and update them after the deployment in the **Post-Deployment Configuration** section.
-
-   - Complete the deployment process [here](#post-deployment-configuration).
-
-
-## CI (GitHub Actions) Setup for Production Deployment
-
-To enable Continuous Integration through Github Actions, we provide **prod-backend-deploy.yml** and **prod-frontend-deploy.yml** files. To connect them to GitHub, simply move them to the .github/workflows/ directory.
-
-You can do it with the following commands:
-   ```bash
-    mv prod-backend-deploy.yml .github/workflows/prod-backend-deploy.yml
-    mv prod-frontend-deploy.yml .github/workflows/prod-frontend-deploy.yml
-   ```
-
-### Prerequisites
-1. **Create a Vercel Token**:  
-   - Generate your [Vercel Access Token](https://vercel.com/account/tokens).  
-   - Save the token as `VERCEL_TOKEN` in your GitHub secrets.
-
-2. **Install Vercel CLI**:  
-   ```bash
-   pnpm i -g vercel@latest
-   ```
-3. Authenticate your account.
-    ```bash
-   vercel login
-   ```
-### Database Creation (Required)
-
-   1. **Choosing a Database**
-      - You can use your own database hosted on a different service or opt for the [Neon](https://neon.tech/docs/introduction) database, which integrates seamlessly with Vercel.
-
-   2. **Setting Up a Neon Database via Vercel**
-      - In the **Projects dashboard** page on Vercel, navigate to the **Storage** section.  
-      - Select the option to **Create a Database** to provision a Neon database.
-
-   3. **Configuring the Database URL**
-      - After creating the database, retrieve the **Database URL** provided by Neon.  
-      - Include this URL in your **Environment Variables** under `DATABASE_URL`.  
-
-   4. **Migrating the Database**
-      - The database migration will happen automatically during the deployment GitHub action, setting up the necessary tables and schema.
-### Frontend Setup
-
-1. Link the nextjs-frontend Project
-
-2. Navigate to the nextjs-frontend directory and run:
-   ```bash
-   cd nextjs-frontend
-   vercel link
-   ```
-3. Follow the prompts:
-   - Link to existing project? No
-   - Modify settings? No
-
-4. Save Project IDs and Add GitHub Secrets:
-  - Open `nextjs-frontend/.vercel/project.json` and add the following to your GitHub repository secrets:
-    - `projectId` → `VERCEL_PROJECT_ID_FRONTEND`
-    - `orgId` → `VERCEL_ORG_ID`
-
-### Backend Setup
-
-1. Link the fastapi_backend Project
-
-2. Navigate to the fastapi_backend directory and run:
-   ```bash
-   cd fastapi_backend
-   vercel link --local-config=vercel.prod.json
-   ```
-   - We have a special configuration than we need to set the --local-config value.
-3. Follow the prompts:
-   - Link to existing project? No
-   - Modify settings? No
-
-4. Save Project IDs and Add GitHub Secrets:
-  - Open `fastapi_backend/.vercel/project.json` and add the following to your GitHub repository secrets:
-    - `projectId` → `VERCEL_PROJECT_ID_BACKEND`
-    - `orgId` → `VERCEL_ORG_ID` (Only in case you haven't added that before)
-
-### Notes
-- Once everything is set up, simply run `git push`, and the deploy will automatically take place.
-- Ensure you complete the setup for both the frontend and backend separately.
-- Refer to the [Vercel CLI Documentation](https://vercel.com/docs/cli) for more details.
-- You can find the project_id into the vercel web project settings.
-- You can find the organization_id into the vercel web organization settings.
-
-## **Post-Deployment Configuration**
-
-### Frontend
-   - Navigate to the **Settings** page of the deployed frontend project.  
-   - Access the **Environment Variables** section.  
-   - Update the `API_BASE_URL` variable with the backend URL once the backend deployment is complete.
-
-### Backend
-   - Access the **Settings** page of the deployed backend project.  
-   - Navigate to the **Environment Variables** section and update the following variables with secure values:
-
-     - **CORS_ORIGINS**  
-       - Once the frontend is deployed, replace `["*"]` with the actual frontend URL.
-
-     - **ACCESS_SECRET_KEY**  
-       - Generate a secure key for API access and set it here.  
-
-     - **RESET_PASSWORD_SECRET_KEY**
-       - Generate a secure key for password reset functionality and set it.
-
-     - **VERIFICATION_SECRET_KEY**  
-       - Generate a secure key for user verification and configure it.
-
-   - For detailed instructions on how to set these secret keys, refer to the section on [Setting up Environment Variables](#setting-up-environment-variables).
-
-## Makefile
-
-This project includes a `Makefile` that provides a set of commands to simplify common tasks such as starting the backend and frontend servers, running tests, building Docker containers, and more.
-
-### Available Commands
-
-You can see all available commands and their descriptions by running the following command in your terminal:
-
-```bash
-make help
-```
-
-## Important Considerations
-- **Environment Variables**: Ensure your `.env` files are up-to-date.
-- **Database Setup**: It is recommended to use Docker for running the database, even when running the backend and frontend locally, to simplify configuration and avoid potential conflicts.
-- **Consistency**: It is **not recommended** to switch between running the project locally and using Docker, as this may cause permission issues or unexpected problems. Choose one method and stick with it.
-
-## Contributing
-
-If you wish to contribute to this project, please first discuss the change you wish to make via an [issue](https://github.com/vintasoftware/nextjs-fastapi-template/issues).
-
-Check our [contributing guide](https://github.com/vintasoftware/nextjs-fastapi-template/blob/main/CONTRIBUTING.md) to learn more about our development process and how you can test your changes to the boilerplate.
-
-## Share your project!
-
-You can use our template to kick-start your project or streamline your efforts in securing funding. Starting with a strong foundation can make your product more resilient and allow you to focus on what matters most: delivering value to your customers.
-
-If our template has been part of your journey, we'd love to hear about it! Share your story with us, and we’ll help spread the word about your project through our social media channels, giving it a broader reach.
-
-Send us an email at contact@vintasoftware.com telling us a bit more about how our template helped you boost your project.
-
-## Commercial Support
-
-[![alt text](https://avatars2.githubusercontent.com/u/5529080?s=80&v=4 "Vinta Logo")](https://www.vinta.com.br/)
-
-This project is maintained by [Vinta Software](https://www.vinta.com.br/) and is used in products of Vinta's clients. We are always looking for exciting work! If you need any commercial support, feel free to get in touch: contact@vinta.com.br
