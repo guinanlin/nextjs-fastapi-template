@@ -1,7 +1,25 @@
-[![CI](https://github.com/vintasoftware/nextjs-fastapi-template/actions/workflows/ci.yml/badge.svg)](https://github.com/vintasoftware/nextjs-fastapi-template/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/vintasoftware/nextjs-fastapi-template/badge.svg)](https://coveralls.io/github/vintasoftware/nextjs-fastapi-template)
+<p align="center">
+  <a href="https://www.vintasoftware.com/blog/next-js-fastapi-template"><img src="https://cdn.prod.website-files.com/64b9f7763232fd7832edb089/67bcfe16c484e4960dcbf7fe_nextjs_and_fast_api_thumb.webp" alt="Next.js FastAPI Template"></a>
+</p>
+<p align="center">
+    <em>Next.js FastAPI Template: Python + Modern TypeScript stack with Zod validation.</em>
+</p>
+<p align="center">
+<a href="https://github.com/vintasoftware/nextjs-fastapi-template/actions/workflows/ci.yml" target="_blank">
+    <img src="https://github.com/vintasoftware/nextjs-fastapi-template/actions/workflows/ci.yml/badge.svg" alt="CI">
+</a>
+<a href="https://coveralls.io/github/vintasoftware/nextjs-fastapi-template" target="_blank">
+    <img src="https://coveralls.io/repos/github/vintasoftware/nextjs-fastapi-template/badge.svg" alt="Coverage">
+</a>
+</p>
 
-# nextjs-fastapi-template
+---
+**Source Code**: <a href="https://github.com/vintasoftware/nextjs-fastapi-template" target="_blank">https://github.com/vintasoftware/nextjs-fastapi-template</a>
+
+---
+
+# Next.js FastAPI Template
+Introducing the Next.js FastAPI Template: A cutting-edge foundation for modern full-stack development that seamlessly integrates Next.js with FastAPI. This template combines Python's backend power with TypeScript's frontend, enhanced by Zod's robust type validation. Perfect for developers seeking a production-ready architecture that balances performance, type safety, and developer experience in one cohesive package.
 
 ## Table of Contents
 * [About](#about)
@@ -43,7 +61,7 @@
 * [Commercial Support](#commercial-support)
 
 ## About
-This template streamlines building APIs with [FastAPI](https://fastapi.tiangolo.com/) and dynamic frontends with [Next.js](https://nextjs.org/). It integrates the backend and frontend using [@hey-api/openapi-ts](https://github.com/hey-ai/openapi-ts) to generate a type-safe client, with automated watchers to keep the OpenAPI schema and client updated, ensuring a smooth and synchronized development workflow.  
+This template streamlines building APIs with [FastAPI](https://fastapi.tiangolo.com/) and dynamic frontends with [Next.js](https://nextjs.org/). It integrates the backend and frontend using [@hey-api/openapi-ts](https://github.com/hey-api/openapi-ts) to generate a type-safe client, with automated watchers to keep the OpenAPI schema and client updated, ensuring a smooth and synchronized development workflow.  
 
 - [Next.js](https://nextjs.org/): Fast, SEO-friendly frontend framework  
 - [FastAPI](https://fastapi.tiangolo.com/): High-performance Python backend  
@@ -73,8 +91,8 @@ This template streamlines building APIs with [FastAPI](https://fastapi.tiangolo.
 
 With this setup, you'll save time and maintain a seamless connection between your backend and frontend, boosting productivity and reliability.
 
-## Production-Ready Authentication & Dashboard features
-This template comes with a pre-configured authentication system and a simple dashboard interface, allowing you to start building your application with user management features right away.
+## Production-Ready Authentication & Dashboard Features
+This template comes with a pre-configured authentication system and a simple dashboard interface, allowing you to start building your application with user management features immediately.
 
 ## Getting Started with This Template
 
@@ -96,9 +114,9 @@ Once completed, proceed to the [Setup](#setup) section below.
 #### 1. uv
 uv is used to manage Python dependencies in the backend. Install uv by following the [official installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
-#### 2. Node.jsm, npm and pnpm
-Ensure Node.js and npm are installed for running the frontend. Follow the [Node.js installation guide](https://nodejs.org/en/download/).
-After that install pnpm by running:
+#### 2. Node.js, npm and pnpm
+To run the frontend, ensure Node.js and npm are installed. Follow the [Node.js installation guide](https://nodejs.org/en/download/).
+After that, install pnpm by running:
 ```bash
 npm install -g pnpm
 ```
@@ -125,7 +143,7 @@ Copy the `.env.example` files to `.env` and update the variables with your own v
    python3 -c "import secrets; print(secrets.token_hex(32))"
    ```
 2. The DATABASE, MAIL, OPENAPI, CORS, and FRONTEND_URL settings are ready to use locally.
-3. If you're using Docker, the DATABASE and MAIL settings are already configured in Docker Compose.
+3. The DATABASE and MAIL settings are already configured in Docker Compose if you're using Docker.
 4. The OPENAPI_URL setting is commented out. Uncommenting it will hide the /docs and openapi.json URLs, which is ideal for production.
 5. You can check the .env.example file for more information about the variables.
 
@@ -146,8 +164,8 @@ Copy the `.env.example` files to `.env`. These values are unlikely to change, so
    make docker-migrate-db
    ```
 
-### Build the project (without Docker):
-To setup the project environment locally, use the following commands:
+### Build the Project (without Docker):
+To set the project environment locally, use the following commands:
 
 #### Backend
 
@@ -162,7 +180,7 @@ To setup the project environment locally, use the following commands:
    pnpm install
    ```
 
-### Build the project (with Docker):
+### Build the Project (with Docker):
 
 1. Build the backend and frontend containers:
    ```bash
@@ -196,11 +214,11 @@ If you are using Docker:
 - **Backend**: Access the API at `http://localhost:8000`.
 - **Frontend**: Access the web application at `http://localhost:3000`.
 
-### Hot Reload on development
-The project includes two hot reloads when running the application, one for the backend and one for the frontend, which automatically restart local servers when they detect changes. This ensures that the application is always up-to-date without needing manual restarts.
+### Hot Reload on Development
+The project includes two hot reloads running the application, one for the backend and one for the frontend. These automatically restart local servers when they detect changes, ensuring that the application is always up to date without needing manual restarts.
 
 - The **backend hot reload** monitors changes to the backend code.
-- The **frontend hot reload** monitors changes to the frontend code, as well as to the `openapi.json` schema generated by the backend.
+- The **frontend hot reload** monitors changes to the frontend code and the `openapi.json` schema generated by the backend.
 
 ### Manual Execution of Hot Reload Commands
 You can manually execute the same commands that the hot reloads call when they detect a change:
@@ -242,8 +260,8 @@ Or using Docker:
    ```
 ## Pre-Commit Setup
 To maintain code quality and consistency, the project includes two separate pre-commit configuration files:
-- `.pre-commit-config.yaml` for running pre-commit checks locally.
-- `.pre-commit-config.docker.yaml` for running pre-commit checks within Docker.
+- `.pre-commit-config.yaml` is used to run pre-commit checks locally.
+- `.pre-commit-config.docker.yaml` is used to run pre-commit checks within Docker.
 
 ### Installing and Activating Pre-Commit Hooks
 To activate pre-commit hooks, run the following commands for each configuration file:
@@ -258,9 +276,9 @@ To activate pre-commit hooks, run the following commands for each configuration 
   pre-commit install -c .pre-commit-config.docker.yaml
   ```
 
-### Email Localhost Setup
+### Localhost Email Server Setup
 
-To setup the email locally, you need to start [MailHog](https://github.com/mailhog/MailHog) by running the following command:
+To set up the email server locally, you need to start [MailHog](https://github.com/mailhog/MailHog) by running the following command:
    ```bash
    make docker-up-mailhog
    ```
@@ -297,10 +315,10 @@ then apply the migration to the database:
    ```
 
 ## GitHub Actions
-This project comes with a pre-configured GitHub Actions setup to enable CI/CD. You can find the workflow configuration files inside the .github/workflows directory. Feel free to customize these workflows to better suit your project's needs.
+This project has a pre-configured GitHub Actions setup to enable CI/CD. The workflow configuration files are inside the .github/workflows directory. You can customize these workflows to suit your project's needs better.
 
 ### Secrets Configuration
-For the workflows to function correctly, make sure to add the necessary secret keys to your GitHub repository's settings. Navigate to Settings > Secrets and variables > Actions and add the following keys:
+For the workflows to function correctly, add the secret keys to your GitHub repository's settings. Navigate to Settings > Secrets and variables > Actions and add the following keys:
 ```
 DATABASE_URL: The connection string for your primary database.
 TEST_DATABASE_URL: The connection string for your test database.
@@ -313,7 +331,7 @@ VERIFICATION_SECRET_KEY: The secret key for email or user verification.
 
 ### Overview
 
- Deploy to **Vercel** is supported, with dedicated buttons for the **Frontend** and **Backend** applications. Both require specific configurations during and after deployment to ensure proper functionality.
+ Deploying to **Vercel** is supported, with dedicated buttons for the **Frontend** and **Backend** applications. Both require specific configurations during and after deployment to ensure proper functionality.
 
 ---
 
@@ -332,21 +350,21 @@ VERIFICATION_SECRET_KEY: The secret key for email or user verification.
 
 1. **Deploying the Backend**  
    - Click the **Backend** button above to begin deployment.
-   - Set up the database first. The connection is automatically configured, so just follow the steps, and it should work by default.
+   - First, set up the database. The connection is automatically configured, so follow the steps, and it should work by default.
    - During the deployment process, you will be prompted to configure the following environment variables:
 
      - **CORS_ORIGINS**  
-       - Set this to `["*"]` initially to allow all origins. You will update this with the frontend URL later.
+       - Set this to `["*"]` initially to allow all origins. Later, you can update this with the frontend URL.
 
      - **ACCESS_SECRET_KEY**, **RESET_PASSWORD_SECRET_KEY**, **VERIFICATION_SECRET_KEY**  
-       - You can temporarily set these secret keys as plain strings (e.g., `examplekey`) during deployment. However, you should generate secure keys and update them after the deployment in the **Post-Deployment Configuration** section.
+       - During deployment, you can temporarily set these secret keys as plain strings (e.g., `examplekey`). However, you should generate secure keys and update them after the deployment in the **Post-Deployment Configuration** section.
 
    - Complete the deployment process [here](#post-deployment-configuration).
 
 
 ## CI (GitHub Actions) Setup for Production Deployment
 
-To enable Continuous Integration through Github Actions, we provide **prod-backend-deploy.yml** and **prod-frontend-deploy.yml** files. To connect them to GitHub, simply move them to the .github/workflows/ directory.
+We provide the **prod-backend-deploy.yml** and **prod-frontend-deploy.yml** files to enable continuous integration through Github Actions. To connect them to GitHub, simply move them to the .github/workflows/ directory.
 
 You can do it with the following commands:
    ```bash
@@ -370,7 +388,7 @@ You can do it with the following commands:
 ### Database Creation (Required)
 
    1. **Choosing a Database**
-      - You can use your own database hosted on a different service or opt for the [Neon](https://neon.tech/docs/introduction) database, which integrates seamlessly with Vercel.
+      - You can use your database hosted on a different service or opt for the [Neon](https://neon.tech/docs/introduction) database, which integrates seamlessly with Vercel.
 
    2. **Setting Up a Neon Database via Vercel**
       - In the **Projects dashboard** page on Vercel, navigate to the **Storage** section.  
@@ -381,7 +399,7 @@ You can do it with the following commands:
       - Include this URL in your **Environment Variables** under `DATABASE_URL`.  
 
    4. **Migrating the Database**
-      - The database migration will happen automatically during the deployment GitHub action, setting up the necessary tables and schema.
+      - The database migration will happen automatically during the GitHub action deployment, setting up the necessary tables and schema.
 ### Frontend Setup
 
 1. Link the nextjs-frontend Project
@@ -409,7 +427,7 @@ You can do it with the following commands:
    cd fastapi_backend
    vercel link --local-config=vercel.prod.json
    ```
-   - We have a special configuration than we need to set the --local-config value.
+   - We use a specific configuration file to set the --local-config value.
 3. Follow the prompts:
    - Link to existing project? No
    - Modify settings? No
@@ -420,11 +438,11 @@ You can do it with the following commands:
     - `orgId` → `VERCEL_ORG_ID` (Only in case you haven't added that before)
 
 ### Notes
-- Once everything is set up, simply run `git push`, and the deploy will automatically take place.
-- Ensure you complete the setup for both the frontend and backend separately.
+- Once everything is set up, run `git push`, and the deployment will automatically occur.
+- Please ensure you complete the setup for both the frontend and backend separately.
 - Refer to the [Vercel CLI Documentation](https://vercel.com/docs/cli) for more details.
-- You can find the project_id into the vercel web project settings.
-- You can find the organization_id into the vercel web organization settings.
+- You can find the project_id in the vercel web project settings.
+- You can find the organization_id in the vercel web organization settings.
 
 ## **Post-Deployment Configuration**
 
@@ -449,11 +467,18 @@ You can do it with the following commands:
      - **VERIFICATION_SECRET_KEY**  
        - Generate a secure key for user verification and configure it.
 
-   - For detailed instructions on how to set these secret keys, refer to the section on [Setting up Environment Variables](#setting-up-environment-variables).
+   - For detailed instructions on setting these secret keys, please look at the section on [Setting up Environment Variables](#setting-up-environment-variables).
+
+### Fluid Serverless Activation
+[Fluid](https://vercel.com/docs/functions/fluid-compute) is Vercel's new concurrency model for serverless functions, allowing them to handle multiple 
+requests per execution instead of spinning up a new instance for each request. This improves performance, 
+reduces cold starts, and optimizes resource usage, making serverless workloads more efficient.
+
+Follow this [guide](https://vercel.com/docs/functions/fluid-compute#how-to-enable-fluid-compute) to activate Fluid.
 
 ## Makefile
 
-This project includes a `Makefile` that provides a set of commands to simplify common tasks such as starting the backend and frontend servers, running tests, building Docker containers, and more.
+This project includes a `Makefile` that provides a set of commands to simplify everyday tasks such as starting the backend and frontend servers, running tests, building Docker containers, and more.
 
 ### Available Commands
 
@@ -465,22 +490,22 @@ make help
 
 ## Important Considerations
 - **Environment Variables**: Ensure your `.env` files are up-to-date.
-- **Database Setup**: It is recommended to use Docker for running the database, even when running the backend and frontend locally, to simplify configuration and avoid potential conflicts.
-- **Consistency**: It is **not recommended** to switch between running the project locally and using Docker, as this may cause permission issues or unexpected problems. Choose one method and stick with it.
+- **Database Setup**: It is recommended to use Docker to run the database, even when running the backend and frontend locally, to simplify configuration and avoid potential conflicts.
+- **Consistency**: It is **not recommended** to switch between running the project locally and using Docker, as this may cause permission issues or unexpected problems. You can choose one method and stick with it.
 
 ## Contributing
 
-If you wish to contribute to this project, please first discuss the change you wish to make via an [issue](https://github.com/vintasoftware/nextjs-fastapi-template/issues).
+If you wish to contribute to this project, please discuss the change you want to make via an [issue](https://github.com/vintasoftware/nextjs-fastapi-template/issues).
 
 Check our [contributing guide](https://github.com/vintasoftware/nextjs-fastapi-template/blob/main/CONTRIBUTING.md) to learn more about our development process and how you can test your changes to the boilerplate.
 
 ## Share your project!
 
-You can use our template to kick-start your project or streamline your efforts in securing funding. Starting with a strong foundation can make your product more resilient and allow you to focus on what matters most: delivering value to your customers.
+You can use our template to kick-start your project or streamline your efforts to secure funding. Starting with a strong foundation can make your product more resilient and allow you to focus on what matters most: delivering value to your customers.
 
 If our template has been part of your journey, we'd love to hear about it! Share your story with us, and we’ll help spread the word about your project through our social media channels, giving it a broader reach.
 
-Send us an email at contact@vintasoftware.com telling us a bit more about how our template helped you boost your project.
+Please email us at contact@vintasoftware.com telling us more about how our template helped you boost your project.
 
 ## Commercial Support
 
