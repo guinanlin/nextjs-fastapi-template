@@ -36,7 +36,7 @@ export async function login(prevState: unknown, formData: FormData) {
       return { server_validation_error: getErrorMessage(error) };
     }
     (await cookies()).set("accessToken", data.access_token);
-  } catch (err: unknown) {
+  } catch {
     // console.error("Login error:", err);
     // console.error("Error type:", typeof err);
     // console.error("Error message:", (err as Error).message);
