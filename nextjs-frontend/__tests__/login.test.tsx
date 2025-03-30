@@ -17,7 +17,7 @@ jest.mock("next/navigation", () => ({
 
 describe("login action", () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterEach(() => {
