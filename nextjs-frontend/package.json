@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-client": "openapi-ts",
+    "generate-client": "openapi-ts -i ./openapi.json -o ./app/openapi-client",
     "test": "jest",
     "coverage": "jest --coverage",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,html}'",

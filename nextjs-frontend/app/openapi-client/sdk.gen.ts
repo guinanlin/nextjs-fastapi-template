@@ -59,7 +59,6 @@ export const client = createClient(createConfig());
 export const authJwtLogin = <ThrowOnError extends boolean = false>(
   options: OptionsLegacyParser<AuthJwtLoginData, ThrowOnError>,
 ) => {
-  console.log("authJwtLogin called with options:", options);
   return (options?.client ?? client).post<
     AuthJwtLoginResponse,
     AuthJwtLoginError,
