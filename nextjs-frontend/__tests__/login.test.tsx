@@ -8,7 +8,7 @@ jest.mock("../app/clientService", () => ({
 
 jest.mock("next/headers", () => {
   const mockSet = jest.fn();
-  return { cookies: jest.fn().mockResolvedValue({ set: mockSet }) };
+  return { cookies: jest.fn().mockReturnValue({ set: mockSet }) };
 });
 
 jest.mock("next/navigation", () => ({
@@ -16,6 +16,14 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("login action", () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    (console.error as jest.Mock<typeof console.error>).mockRestore();
+  });
+
   it("should call login service action with the correct input", async () => {
     const formData = new FormData();
     formData.set("username", "a@a.com");
@@ -80,8 +88,8 @@ describe("login action", () => {
 
     expect(result).toEqual({
       errors: {
-        password: ["Password is required"],
-        username: ["Username is required"],
+        password: ["密码是必需的"],
+        username: ["用户名是必需的"],
       },
     });
 
@@ -100,7 +108,7 @@ describe("login action", () => {
     const result = await login(undefined, formData);
 
     expect(result).toEqual({
-      server_error: "An unexpected error occurred. Please try again later.",
+      server_error: "发生了一个意外错误。请稍后再试。",
     });
   });
 });

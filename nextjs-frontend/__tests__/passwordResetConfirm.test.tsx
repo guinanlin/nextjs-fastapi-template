@@ -17,7 +17,15 @@ jest.mock("../lib/clientConfig", () => ({
 }));
 
 describe("passwordReset action", () => {
+  let originalConsoleError: typeof console.error;
+
+  beforeEach(() => {
+    originalConsoleError = console.error;
+    console.error = jest.fn();
+  });
+
   afterEach(() => {
+    console.error = originalConsoleError;
     jest.clearAllMocks();
   });
 
@@ -66,8 +74,8 @@ describe("passwordReset action", () => {
 
     expect(result).toEqual({
       errors: {
-        password: ["Password should contain at least one uppercase letter."],
-        passwordConfirm: ["Passwords must match."],
+        password: ["密码应至少包含一个大写字母。"],
+        passwordConfirm: ["密码必须匹配。"],
       },
     });
     expect(resetResetPassword).not.toHaveBeenCalledWith();

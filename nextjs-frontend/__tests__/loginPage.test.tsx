@@ -16,10 +16,10 @@ describe("Login Page", () => {
   it("renders the form with username and password input and submit button", () => {
     render(<Page />);
 
-    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/用户名/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/密码/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /sign in/i }),
+      screen.getByRole("button", { name: /登录/i }),
     ).toBeInTheDocument();
   });
 
@@ -28,9 +28,9 @@ describe("Login Page", () => {
 
     render(<Page />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole("button", { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/用户名/i);
+    const passwordInput = screen.getByLabelText(/密码/i);
+    const submitButton = screen.getByRole("button", { name: /登录/i });
 
     fireEvent.change(usernameInput, {
       target: { value: "testuser@example.com" },
@@ -54,9 +54,9 @@ describe("Login Page", () => {
 
     render(<Page />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole("button", { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/用户名/i);
+    const passwordInput = screen.getByLabelText(/密码/i);
+    const submitButton = screen.getByRole("button", { name: /登录/i });
 
     fireEvent.change(usernameInput, { target: { value: "wrong@example.com" } });
     fireEvent.change(passwordInput, { target: { value: "wrongpass" } });
@@ -69,14 +69,14 @@ describe("Login Page", () => {
 
   it("displays server error for unexpected errors", async () => {
     (login as jest.Mock).mockResolvedValue({
-      server_error: "An unexpected error occurred. Please try again later.",
+      server_error: "发生了一个意外错误。请稍后再试。",
     });
 
     render(<Page />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole("button", { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/用户名/i);
+    const passwordInput = screen.getByLabelText(/密码/i);
+    const submitButton = screen.getByRole("button", { name: /登录/i });
 
     fireEvent.change(usernameInput, { target: { value: "test@test.com" } });
     fireEvent.change(passwordInput, { target: { value: "password123" } });
@@ -85,7 +85,7 @@ describe("Login Page", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "An unexpected error occurred. Please try again later.",
+          "发生了一个意外错误。请稍后再试。",
         ),
       ).toBeInTheDocument();
     });

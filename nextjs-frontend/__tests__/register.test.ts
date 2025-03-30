@@ -30,7 +30,7 @@ describe("register action", () => {
 
     expect(redirect).toHaveBeenCalled();
   });
-  it("should should return an error if the server call fails", async () => {
+  it("should return an error if the server call fails", async () => {
     const formData = new FormData();
     formData.set("email", "a@a.com");
     formData.set("password", "Q12341414#");
@@ -64,10 +64,10 @@ describe("register action", () => {
 
     expect(result).toEqual({
       errors: {
-        email: ["Invalid email address"],
+        email: ["邮箱地址无效"],
         password: [
-          "Password should contain at least one uppercase letter.",
-          "Password should contain at least one special character.",
+          "密码应至少包含一个大写字母。",
+          "密码应至少包含一个特殊字符。",
         ],
       },
     });

@@ -33,7 +33,7 @@ export async function register(prevState: unknown, formData: FormData) {
       return { server_validation_error: getErrorMessage(error) };
     }
   } catch (err) {
-    console.error("Registration error:", err);
+    // console.error("Registration error:", err);
     return {
       server_error: "An unexpected error occurred. Please try again later.",
     };

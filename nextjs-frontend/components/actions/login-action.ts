@@ -30,17 +30,17 @@ export async function login(prevState: unknown, formData: FormData) {
 
   try {
     const { data, error } = await authJwtLogin(input);
-    console.log("authJwtLogin data:", data);
-    console.log("authJwtLogin error:", error);
+    // console.log("authJwtLogin data:", data);
+    // console.log("authJwtLogin error:", error);
     if (error) {
       return { server_validation_error: getErrorMessage(error) };
     }
     (await cookies()).set("accessToken", data.access_token);
   } catch (err: unknown) {
-    console.error("Login error:", err);
-    console.error("Error type:", typeof err);
-    console.error("Error message:", (err as Error).message);
-    console.error("Error stack:", (err as Error).stack);
+    // console.error("Login error:", err);
+    // console.error("Error type:", typeof err);
+    // console.error("Error message:", (err as Error).message);
+    // console.error("Error stack:", (err as Error).stack);
     return {
       server_error: "发生了一个意外错误。请稍后再试。",
     };
