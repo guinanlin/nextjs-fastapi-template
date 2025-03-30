@@ -15,8 +15,16 @@ def generate_openapi_schema(output_file):
     output_path = Path(output_file)
 
     updated_schema = remove_operation_id_tag(schema)
+    new_schema_json = json.dumps(updated_schema, indent=2)
 
-    output_path.write_text(json.dumps(updated_schema, indent=2))
+    # 检查文件是否已存在以及内容是否已更改
+    if output_path.exists():
+        existing_schema_json = output_path.read_text()
+        if existing_schema_json == new_schema_json:
+            print("OpenAPI schema unchanged, skipping write.")
+            return  # 如果内容相同，则不写入文件
+
+    output_path.write_text(new_schema_json)
     print(f"OpenAPI schema saved to {output_file}")
 
 
