@@ -18,9 +18,7 @@ describe("Login Page", () => {
 
     expect(screen.getByLabelText(/用户名/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/密码/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /登录/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /登录/i })).toBeInTheDocument();
   });
 
   it("calls login in successful form submission", async () => {
@@ -84,9 +82,7 @@ describe("Login Page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          "发生了一个意外错误。请稍后再试。",
-        ),
+        screen.getByText("发生了一个意外错误。请稍后再试。"),
       ).toBeInTheDocument();
     });
   });
