@@ -2,8 +2,8 @@ from pathlib import Path
 import urllib.parse
 
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from .config import settings
-from .models import User
+from app.core.config import settings
+from app.model.base_model import User
 
 
 def get_email_config():

@@ -9,13 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 export function getErrorMessage(
   error: RegisterRegisterError | AuthJwtLoginError,
 ): string {
-  let errorMessage = "An unknown error occurred";
+  let errorMessage = "发生未知错误";
 
   if (typeof error.detail === "string") {
-    // If detail is a string, use it directly
+    // 如果详情是字符串，直接使用
     errorMessage = error.detail;
   } else if (typeof error.detail === "object" && "reason" in error.detail) {
-    // If detail is an object with a 'reason' key, use that
+    // 如果详情是一个带有"reason"键的对象，则使用它
     errorMessage = error.detail["reason"];
   }
 

@@ -21,13 +21,13 @@ export default function Page() {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <form action={dispatch}>
-        <Card className="w-full max-w-sm rounded-lg shadow-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <Card className="w-full max-w-sm rounded-lg shadow-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 md:min-w-[450px]">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-semibold text-gray-800 dark:text-white">
-              Login
+              登录
             </CardTitle>
             <CardDescription className="text-sm text-gray-600 dark:text-gray-400">
-              Enter your email below to log in to your account.
+              输入您的邮箱地址以登录您的帐户。
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6 p-6">
@@ -36,13 +36,13 @@ export default function Page() {
                 htmlFor="username"
                 className="text-gray-700 dark:text-gray-300"
               >
-                Username
+                用户名
               </Label>
               <Input
                 id="username"
                 name="username"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="m@qq.com"
                 required
                 className="border-gray-300 dark:border-gray-600"
               />
@@ -53,7 +53,7 @@ export default function Page() {
                 htmlFor="password"
                 className="text-gray-700 dark:text-gray-300"
               >
-                Password
+                密码
               </Label>
               <Input
                 id="password"
@@ -67,18 +67,18 @@ export default function Page() {
                 href="/password-recovery"
                 className="ml-auto inline-block text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500"
               >
-                Forgot your password?
+                忘记密码？
               </Link>
             </div>
-            <SubmitButton text="Sign In" />
+            <SubmitButton text="登录" />
             <FormError state={state} />
             <div className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
-              Don&apos;t have an account?{" "}
+              没有帐户？{" "}
               <Link
                 href="/register"
                 className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-500"
               >
-                Sign up
+                注册
               </Link>
             </div>
           </CardContent>

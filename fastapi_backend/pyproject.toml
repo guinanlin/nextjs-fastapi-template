@@ -2,7 +2,10 @@
 name = "app"
 version = "0.1.0"
 description = ""
-authors = [{ name = "Anderson Resende", email = "anderson@vinta.com.br" }]
+authors = [
+    { name = "Anderson Resende", email = "anderson@vinta.com.br" },
+    { name = "guinan.lin", email = "goodhawk@gmail.com" }
+]
 requires-python = ">=3.12,<3.13"
 readme = "README.md"
 dependencies = [
