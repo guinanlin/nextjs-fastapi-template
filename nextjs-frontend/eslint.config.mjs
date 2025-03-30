@@ -9,6 +9,9 @@ const eslintConfig = [
     extends: ["next/core-web-vitals", "next/typescript", "prettier"],
     rules: { "@typescript-eslint/no-empty-object-type": "off" },
   }),
+  {
+    ignores: ["components/ui/*"]
+  }
 ];
 
 export default eslintConfig;
