@@ -48,9 +48,9 @@ jobs:
         working-directory: ./fastapi_backend
         run: uv run coverage run -m pytest
 
-      - name: Generate LCOV coverage report
+      - name: Generate XML coverage report
         working-directory: ./fastapi_backend
-        run: uv run coverage lcov -o coverage.info
+        run: uv run coverage xml -o coverage.xml
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.3.4
@@ -58,7 +58,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: python-coverage
           parallel: true
-          path-to-lcov: fastapi_backend/coverage.info
+          path-to-lcov: fastapi_backend/coverage.xml
 
   build-frontend:
     name: Next.js CI
