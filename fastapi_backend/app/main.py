@@ -11,7 +11,7 @@ app = FastAPI(
     generate_unique_id_function=simple_generate_unique_route_id,
     openapi_url=settings.OPENAPI_URL,
     docs_url=None,  # 禁用默认 Swagger UI
-    redoc_url=None,  # 禁用默认 Redoc    
+    redoc_url=None,  # 禁用默认 Redoc
 )
 
 # Middleware for CORS configuration
