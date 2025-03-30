@@ -53,6 +53,7 @@ app.include_router(
 # Include items routes
 app.include_router(items_router, prefix="/items")
 
+
 # 自定义 Swagger UI 端点
 @app.get("/docs", include_in_schema=False, tags=["docs"])
 async def custom_swagger_ui():
@@ -62,6 +63,7 @@ async def custom_swagger_ui():
         swagger_js_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/5.0.0/swagger-ui-bundle.js",
         swagger_css_url="https://cdn.bootcdn.net/ajax/libs/swagger-ui/5.0.0/swagger-ui.css",
     )
+
 
 # 自定义 Redoc 端点
 @app.get("/redoc", include_in_schema=False, tags=["redoc"])
