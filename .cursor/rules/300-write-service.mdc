@@ -1,0 +1,110 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 编写服务层的标准操作程序（SOP）
+
+执行的关键步骤和注意事项：
+1. 一般都会提供相关的UML的类图，请读取UML class类图的内容， 读取出所需要实现的方法。 
+2. 具体的实现方法参照如下的步骤。
+3. 需要实现的服务的路径为： fastapi_backend\app\service
+4. 若需要涉及schema的定义，路径为：fastapi_backend\app\schema
+  
+
+## 1. 导入必要的模块
+在服务文件的开头，导入所需的模块和类：
+```python
+from sqlalchemy.orm import Session
+from app.model.<model_name> import <ModelClass>
+from app.schema.<schema_name> import <CreateSchema>, <UpdateSchema>
+```
+
+## 2. 创建服务类
+定义一个服务类，通常以 `<ModelClass>Service` 命名：
+```python
+class <ModelClass>Service:
+```
+
+## 3. 实现创建方法
+实现一个方法用于创建新记录，通常命名为 `create_<model_name>`：
+```python
+def create_<model_name>(self, db: Session, <model_name>: <CreateSchema>) -> <ModelClass>:
+    db_<model_name> = <ModelClass>(**<model_name>.dict())
+    db.add(db_<model_name>)
+    db.commit()
+    db.refresh(db_<model_name>)
+    return db_<model_name>
+```
+
+## 4. 实现获取方法
+实现一个方法用于获取记录，通常命名为 `get_<model_name>`：
+```python
+def get_<model_name>(self, db: Session, id: str) -> <ModelClass>:
+    return db.query(<ModelClass>).filter(<ModelClass>.id == id).first()
+```
+
+## 5. 实现更新方法
+实现一个方法用于更新记录，通常命名为 `update_<model_name>`：
+```python
+def update_<model_name>(self, db: Session, id: str, <model_name>: <UpdateSchema>) -> <ModelClass>:
+    db_<model_name> = self.get_<model_name>(db, id)
+    if db_<model_name>:
+        for key, value in <model_name>.dict(exclude_unset=True).items():
+            setattr(db_<model_name>, key, value)
+        db.commit()
+        db.refresh(db_<model_name>)
+    return db_<model_name>
+```
+
+## 6. 实现删除方法
+实现一个方法用于删除记录，通常命名为 `delete_<model_name>`：
+```python
+def delete_<model_name>(self, db: Session, id: str) -> bool:
+    db_<model_name> = self.get_<model_name>(db, id)
+    if db_<model_name>:
+        db.delete(db_<model_name>)
+        db.commit()
+        return True
+    return False
+```
+
+## 7. 其他方法
+根据需要，可以添加其他特定于业务逻辑的方法。
+
+## 8. 示例
+以下是一个完整的服务类示例：
+```python
+class UserRoleService:
+    def create_user_role(self, db: Session, user_role: UserRoleCreate) -> UserRole:
+        db_user_role = UserRole(**user_role.dict())
+        db.add(db_user_role)
+        db.commit()
+        db.refresh(db_user_role)
+        return db_user_role
+
+    def get_user_role(self, db: Session, role_id: str) -> UserRole:
+        return db.query(UserRole).filter(UserRole.role_id == role_id).first()
+
+    def update_user_role(self, db: Session, role_id: str, user_role: UserRoleUpdate) -> UserRole:
+        db_user_role = self.get_user_role(db, role_id)
+        if db_user_role:
+            for key, value in user_role.dict(exclude_unset=True).items():
+                setattr(db_user_role, key, value)
+            db.commit()
+            db.refresh(db_user_role)
+        return db_user_role
+
+    def delete_user_role(self, db: Session, role_id: str) -> bool:
+        db_user_role = self.get_user_role(db, role_id)
+        if db_user_role:
+            db.delete(db_user_role)
+            db.commit()
+            return True
+        return False
+```
+```
+
+### 更新说明：
+- 该SOP详细描述了编写服务层的步骤，包括导入模块、创建服务类、实现CRUD方法等。
+- 该SOP可以作为模板，方便后续在项目中快速复制和使用。

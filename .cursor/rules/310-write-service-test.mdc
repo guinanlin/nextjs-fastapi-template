@@ -1,0 +1,127 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 编写测试服务层的标准操作程序（SOP）
+
+## 项目目录结构
+- 服务文件通常位于 `fastapi_backend\app\service` 目录中，例如 `fastapi_backend/app/service/user_role_service.py`。
+- 测试文件应写入 `fastapi_backend\tests` 目录中，例如 `fastapi_backend/tests/service/test_user_role_service.py`，以保持测试代码与服务代码分离。
+
+## 1. 创建测试py文件：
+测试文件应写入 `fastapi_backend\tests` 目录中，例如 `fastapi_backend/tests/service/test_user_role_service.py`，以保持测试代码与服务代码分离
+
+## 2. 导入必要的模块
+在测试文件的开头，导入所需的模块和类，例如 pytest、SQLAlchemy 和项目中的模型和服务：
+```python
+from fastapi.testclient import TestClient
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.model.base import Base
+from app.model.user_role_model import UserRole
+from app.schema.user_role_schema import UserRoleCreate
+from app.service.user_role_service import UserRoleService
+```
+
+## 3. 创建测试固定装置（Fixture）
+使用 @pytest.fixture 定义测试环境，例如数据库会话：
+```python
+@pytest.fixture
+def db_session():
+    test_db_url = settings.DATABASE_URL.replace('+asyncpg', '')  # 移除asyncpg以使用同步驱动
+    engine = create_engine(test_db_url)  # 使用PostgreSQL同步引擎
+    Base.metadata.create_all(engine)
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = SessionLocal()
+    yield db  # 提供会话
+    db.close()
+    # Base.metadata.drop_all(engine)  # 清理测试数据
+    
+    # 显式定义删除顺序：先删除 order_details，然后 pet_info，最后 order
+    tables_to_drop = ['order_details', 'pet_info', 'order']
+    for table_name in tables_to_drop:
+        if table_name == 'order':
+            db.query(Order).delete(synchronize_session=False)  # 删除 order 表中的所有数据
+        elif table_name == 'order_details':
+            db.query(OrderDetails).delete(synchronize_session=False)  # 先删除 order_details 表中的所有数据
+        elif table_name == 'pet_info':
+            db.query(PetInfo).delete(synchronize_session=False)  # 然后删除 pet_info 表中的所有数据
+    db.commit()  # 提交删除操作
+```
+
+## 4. 实现测试方法
+为每个服务方法编写测试函数，通常以 test_ 开头：
+```python
+# 测试 assign_role 方法
+def test_assign_role(db_session):
+    service = UserRoleService()
+    user_role_data = UserRoleCreate(role_name="TestRole", user_id=str(uuid4()))  # 使用有效的测试数据
+    result = service.assign_role(db_session, user_role_data)
+    assert result is not None
+    assert result.role_name == "TestRole"
+
+# 测试 remove_role 方法
+def test_remove_role(db_session):
+    service = UserRoleService()
+    user_role_data = UserRoleCreate(role_name="TestRoleToRemove", user_id=str(uuid4()))
+    created_role = service.assign_role(db_session, user_role_data)
+    success = service.remove_role(db_session, user_id=created_role.user_id)
+    assert success is True
+    remaining_role = db_session.query(UserRole).filter(UserRole.user_id == created_role.user_id).first()
+    assert remaining_role is None
+```
+
+## 5. 处理常见问题
+- 确保测试数据有效，例如使用 uuid4() 生成 UUID。
+- 添加断言来验证预期结果。
+- 使用 yield 来管理测试资源的创建和清理。
+
+## 6. 示例
+这是一个完整的测试文件示例：
+```python
+from fastapi.testclient import TestClient
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.model.base import Base
+from app.model.user_role_model import UserRole
+from app.schema.user_role_schema import UserRoleCreate
+from app.service.user_role_service import UserRoleService
+from uuid import uuid4
+
+@pytest.fixture
+def db_session():
+    engine = create_engine("sqlite:///./test.db")
+    Base.metadata.create_all(engine)
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = SessionLocal()
+    yield db
+    db.close()
+    Base.metadata.drop_all(engine)
+
+def test_assign_role(db_session):
+    service = UserRoleService()
+    user_role_data = UserRoleCreate(role_name="TestRole", user_id=str(uuid4()))
+    result = service.assign_role(db_session, user_role_data)
+    assert result is not None
+    assert result.role_name == "TestRole"
+
+def test_remove_role(db_session):
+    service = UserRoleService()
+    user_role_data = UserRoleCreate(role_name="TestRoleToRemove", user_id=str(uuid4()))
+    created_role = service.assign_role(db_session, user_role_data)
+    success = service.remove_role(db_session, user_id=created_role.user_id)
+    assert success is True
+    remaining_role = db_session.query(UserRole).filter(UserRole.user_id == created_role.user_id).first()
+    assert remaining_role is None
+```
+
+## 7. 运行测试
+使用命令运行测试：
+```bash
+pytest tests/service/test_user_role_service.py
+```
+
+

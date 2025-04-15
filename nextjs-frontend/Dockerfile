@@ -11,14 +11,21 @@ COPY package*.json ./
 
 # Install dependencies as root (or myappuser, depending on your structure)
 RUN pnpm install
-
-## Switch to the non-root user
-USER node
+# RUN chown -R node:node /app
 
 # Copy the rest of your application code
 COPY . .
 
+# # Build the application
+RUN pnpm run build
+
+# Ensure script has execution permissions
+RUN chmod +x ./start.prod.sh
+
+## Switch to the non-root user
+USER node
+
 EXPOSE 3000
 
-# Start the application
-CMD ["./start-prod.sh"]
+# Start the application update
+CMD ["sh", "-c", "pnpm run start & node watcher.js & wait"]

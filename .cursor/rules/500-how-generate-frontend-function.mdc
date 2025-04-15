@@ -1,0 +1,39 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 如何生成前端调用函数
+
+请严格执行这些步骤，我使用的前端构建巩固是pnpm， command是bash
+
+## 步骤
+
+1. **进入后端项目目录**：
+   ```bash
+   cd fastapi_backend
+   ```
+
+2. **生成 OpenAPI 规范**：
+   执行以下命令：
+   ```bash
+   .venv/Scripts/python commands/generate_openapi_schema.py
+   ```
+
+3. **进入前端项目目录**：
+   ```bash
+   cd nextjs-frontend
+   ```
+
+4. **安装前端生成工具**：
+   ```bash
+   pnpm add @hey-api/openapi-ts
+   ```
+
+5. **生成前端 API 客户端**：
+   执行以下命令：
+   ```bash
+   pnpm run generate-client
+   ```
+
+6. **通知用户检查使用**

@@ -1,0 +1,108 @@
+---
+description: 项目信息
+globs: 
+alwaysApply: false
+---
+1. 项目前端 next.js, react, tailwindcss . 构建工具是pnpm
+2. 项目后端 python,fastapi. 构建工具是uv
+3. 项目结构
+nextjs-fastapi-template/                  # 项目根目录
+│
+├── fastapi_backend/                      # 后端代码目录
+│   ├── alembic.ini                       # Alembic 配置文件，用于数据库迁移
+│   ├── alembic_migrations/               # 数据库迁移文件目录
+│   │   ├── versions/                     # 存放数据库迁移版本文件的目录
+│   │   └── ...                           # 其他迁移相关文件
+│   ├── api/                              # API 路由和处理逻辑目录
+│   │   ├── __init__.py                   # API 包的初始化文件
+│   │   ├── endpoints/                    # API 端点目录
+│   │   │   ├── user.py                   # 用户相关的 API 端点
+│   │   │   ├── item.py                   # 项目相关的 API 端点
+│   │   │   └── ...                       # 其他 API 端点
+│   │   └── ...                           # 其他 API 相关文件
+│   ├── app/                              # FastAPI 应用代码目录
+│   │   ├── __init__.py                   # 应用包的初始化文件
+│   │   ├── main.py                       # 应用入口文件，定义 FastAPI 实例和路由
+│   │   ├── model/                        # 数据模型目录
+│   │   │   ├── base_model.py             # 数据模型基类，定义用户等模型
+│   │   │   ├── user.py                   # 用户模型
+│   │   │   ├── item.py                   # 项目模型
+│   │   │   └── ...                       # 其他模型
+│   │   ├── schema/                       # 模式目录
+│   │   │   ├── __pycache__/              # Python 缓存目录
+│   │   │   ├── order_schema.py           # 订单模式文件
+│   │   │   └── user_role_schema.py       # 用户角色模式文件
+│   │   ├── service/                      # 服务层目录，包含业务逻辑
+│   │   │   ├── user_role_service.py      # 用户角色服务逻辑
+│   │   │   ├── order_service.py          # 订单服务逻辑
+│   │   │   └── ...                       # 其他服务逻辑
+│   │   ├── routes/                       # 路由目录
+│   │   ├── schemas.py                    # 模式文件
+│   │   ├── users.py                      # 用户相关文件
+│   │   ├── core/                         # 核心模块目录
+│   │   ├── email.py                      # 电子邮件相关文件
+│   │   ├── email_templates/              # 电子邮件模板目录
+│   │   ├── utils.py                      # 工具函数文件
+│   │   ├── __pycache__/                  # Python 缓存目录
+│   │   └── ...                           # 其他应用相关文件
+│   ├── commands/                         # 命令行工具目录
+│   │   ├── generate_openapi_schema.py    # 生成 OpenAPI 模式的命令
+│   │   └── ...                           # 其他命令相关文件
+│   ├── tests/                            # 测试目录
+│   │   ├── __init__.py                   # 测试包的初始化文件
+│   │   ├── test_user.py                  # 用户相关的测试
+│   │   ├── test_item.py                  # 项目相关的测试
+│   │   └── ...                           # 其他测试文件
+│   ├── Dockerfile                         # Docker 配置文件，用于构建容器
+│   ├── mypy.ini                           # MyPy 配置文件，用于类型检查
+│   ├── pytest.ini                         # Pytest 配置文件
+│   ├── requirements.txt                   # Python 依赖包列表
+│   ├── start.sh                           # 启动脚本，用于启动应用
+│   ├── uv.lock                            # uv 依赖锁定文件
+│   ├── vercel.json                        # Vercel 配置文件
+│   └── vercel.prod.json                  # Vercel 生产环境配置文件
+│
+├── nextjs-frontend/                      # 前端代码目录
+│   ├── __tests__/                         # 测试目录，包含前端的单元测试
+│   │   ├── example.test.ts               # 示例测试文件
+│   │   └── ...                            # 其他测试文件
+│   ├── app/                               # 应用代码目录
+│   │   ├── layout.tsx                     # 应用布局组件
+│   │   ├── page.tsx                       # 首页组件
+│   │   └── ...                            # 其他页面组件
+│   ├── components/                        # 组件目录，包含可复用的 UI 组件
+│   │   ├── ui/                            # UI 组件目录
+│   │   │   ├── button.tsx                 # 按钮组件
+│   │   │   ├── modal.tsx                  # 模态框组件
+│   │   │   └── ...                        # 其他 UI 组件
+│   │   └── ...                            # 其他组件
+│   ├── components.json                    # 组件配置文件
+│   ├── Dockerfile                         # Docker 配置文件，用于构建容器
+│   ├── eslint.config.mjs                 # ESLint 配置文件，用于代码风格检查
+│   ├── jest.config.ts                     # Jest 配置文件，用于测试框架设置
+│   ├── lib/                               # 库目录，包含工具函数和共享逻辑
+│   │   ├── api.ts                         # API 请求相关的工具函数
+│   │   └── ...                            # 其他库文件
+│   ├── middleware.ts                      # 中间件文件，用于处理请求
+│   ├── next.config.mjs                   # Next.js 配置文件
+│   ├── next-env.d.ts                      # Next.js 环境类型定义文件
+│   ├── node_modules/                      # Node.js 依赖包目录
+│   ├── openapi.json                       # OpenAPI 规范文件
+│   ├── openapi-ts.config.ts               # OpenAPI TypeScript 配置文件
+│   ├── package.json                       # 项目依赖和脚本配置文件
+│   ├── pnpm-lock.yaml                     # pnpm 依赖锁定文件
+│   ├── postcss.config.js                  # PostCSS 配置文件，用于样式处理
+│   ├── public/                            # 公共资源目录，存放静态文件
+│   │   ├── images/                        # 图片资源目录
+│   │   ├── favicon.ico                    # 网站图标
+│   │   └── ...                            # 其他静态资源
+│   ├── start.sh                           # 启动开发服务器的脚本
+│   ├── start-prod.sh                      # 启动生产服务器的脚本
+│   ├── tailwind.config.js                 # Tailwind CSS 配置文件
+│   ├── tsconfig.json                      # TypeScript 配置文件
+│   ├── vercel.json                        # Vercel 配置文件，用于部署设置
+│   └── watcher.js                         # 文件监视器，用于热重载
+│
+├── README.md                             # 项目说明文件，包含使用说明和设置指南
+├── Makefile                              # 构建和管理项目的 Makefile
+└── .gitignore                            # Git 忽略文件，列出不需要版本控制的文件

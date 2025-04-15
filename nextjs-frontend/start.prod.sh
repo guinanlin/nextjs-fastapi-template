@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 构建生产版本
-pnpm run build
+# pnpm run build
 
 # 启动 Next.js 生产服务器（前台运行）
 pnpm run start &
