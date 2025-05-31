@@ -1,0 +1,54 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+创建数据库以及账号
+```
+-- 创建生产库及账号
+-- 创建用户 lechonguser 并设置密码
+CREATE USER lechonguser WITH PASSWORD 'lechonguser123';
+
+-- 使用 template0 创建名为 lechong 的数据库，编码设置为 UTF8
+CREATE DATABASE lechong
+    WITH TEMPLATE = template0
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C'
+    OWNER = lechonguser;
+
+-- 授予 lechonguser 对 lechong 数据库的所有权限
+GRANT ALL PRIVILEGES ON DATABASE lechong TO lechonguser;
+
+-- 创建测试库及账号
+-- 创建用户 lechongtestuser 并设置密码
+CREATE USER lechongtestuser WITH PASSWORD 'lechongtestuser123';
+
+-- 使用 template0 创建名为 lechongtest 的数据库，编码设置为 UTF8
+CREATE DATABASE lechongtest
+    WITH TEMPLATE = template0
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C'
+    OWNER = lechongtestuser;
+
+-- 授予 testuser 对 lechongtest 数据库的所有权限
+GRANT ALL PRIVILEGES ON DATABASE lechongtest TO lechongtestuser;
+
+
+```
+
+得到数据库的链接
+
+```
+*# Local database*
+
+DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5432/mydatabase
+
+*# Test database*
+
+TEST_DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5433/testdatabase
+
+
+```
+
