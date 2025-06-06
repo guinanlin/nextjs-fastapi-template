@@ -7,7 +7,17 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.config({
     extends: ["next/core-web-vitals", "next/typescript", "prettier"],
-    rules: { "@typescript-eslint/no-empty-object-type": "off" },
+    plugins: ["unused-imports"],
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        { "argsIgnorePattern": "^_" }
+      ],
+      "@typescript-eslint/no-explicit-any": "error",
+    },
   }),
   {
     ignores: ["components/ui/*"]
