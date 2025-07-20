@@ -64,10 +64,3 @@ repos:
         # Only run frontend client generation if frontend files have changed:
         files: openapi\.json$
         pass_filenames: false
-        # export requirements is required to vercel deploy
-      - id: export-requirements
-        name: Export requirements.txt
-        entry: sh -c 'cd fastapi_backend && uv export > requirements.txt'
-        language: system
-        files: uv.lock  # Trigger when uv.lock is modified
-        pass_filenames: false
